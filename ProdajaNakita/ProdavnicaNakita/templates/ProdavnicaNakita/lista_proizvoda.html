@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Lista Proizvoda</h2>
+  <div>
+    {% for proizvod in proizvodi %}
+      <div>
+        <h3>{{ proizvod.naziv }}</h3>
+        <p>{{ proizvod.opis }}</p>
+        <p>Cena: {{ proizvod.cena }}</p>
+        <a href="{% url 'detalji_proizvoda' proizvod.id %}">Detalji</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

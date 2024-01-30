@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div>
+    <h2>{{ proizvod.naziv }}</h2>
+    <p>{{ proizvod.opis }}</p>
+    <p>Cena: {{ proizvod.cena }}</p>
+    {% if proizvod.slika %}
+      <img src="{{ proizvod.slika.url }}" alt="{{ proizvod.naziv }}">
+    {% endif %}
+
+    <form action="{% url 'dodaj_u_korpu' proizvod.id %}" method="post">
+      {% csrf_token %}
+      <input type="number" name="kolicina" value="1" min="1">
+      <input type="submit" value="Dodaj u korpu">
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Detalji Porudžbine: {{ porudzbina.id }}</h2>
+
+  <p><strong>Korisnik:</strong> {{ porudzbina.korisnik.username }}</p>
+  <p><strong>Datum porudžbine:</strong> {{ porudzbina.kreirano|date:"d.m.Y. H:i" }}</p>
+  <p><strong>Status plaćanja:</strong> {{ porudzbina.placeno|yesno:"Plaćeno,Nije plaćeno" }}</p>
+
+  <h3>Informacije o dostavi</h3>
+  <p><strong>Ime:</strong> {{ porudzbina.ime }}</p>
+  <p><strong>Prezime:</strong> {{ porudzbina.prezime }}</p>
+  <p><strong>Email:</strong> {{ porudzbina.email }}</p>
+  <p><strong>Adresa:</strong> {{ porudzbina.adresa }}</p>
+  <p><strong>Grad:</strong> {{ porudzbina.grad }}</p>
+  <p><strong>Poštanski broj:</strong> {{ porudzbina.postanski_broj }}</p>
+
+  <h3>Stavke Porudžbine</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Proizvod</th>
+        <th>Količina</th>
+        <th>Cena po komadu</th>
+        <th>Ukupna cena</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stavka in stavke %}
+      <tr>
+        <td>{{ stavka.proizvod.naziv }}</td>
+        <td>{{ stavka.kolicina }}</td>
+        <td>{{ stavka.cena }} RSD</td>
+        <td>{{ stavka.ukupna_cena_stavke }} RSD</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p><strong>Ukupna cena porudžbine:</strong> {{ ukupna_cena_porudzbine }} RSD</p>
+{% endblock %}

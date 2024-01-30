@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Vaša korpa</h2>
+  {% if stavke_korpe %}
+  <form action="{% url 'azuriraj_korpu' %}" method="post">
+    {% csrf_token %}
+      <table>
+        <thead>
+          <tr>
+            <th>Proizvod</th>
+            <th>Količina</th>
+            <th>Cena po jedinici</th>
+            <th>Ukupna cena</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for stavka in stavke_korpe %}
+          <tr>
+            <td>{{ stavka.proizvod.naziv }}</td>
+            <td>
+              <input type="number" name="kolicina_{{ stavka.proizvod.id }}" value="{{ stavka.kolicina }}" min="1">
+              <input type="hidden" name="proizvod_id_{{ stavka.proizvod.id }}" value="{{ stavka.proizvod.id }}">
+            </td>
+            <td>{{ stavka.proizvod.cena }} RSD</td>
+            <td>{{ stavka.cena }} RSD</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p>Ukupna cena: {{ ukupna_cena }} RSD</p>
+      <button type="submit">Ažuriraj korpu</button>
+    </form>
+  {% else %}
+    <p>Vaša korpa je prazna.</p>
+  {% endif %}
+  <form action="{% url 'naruci' %}" method="get">
+    <button type="submit">Naruči</button>
+</form>
+{% endblock %}
